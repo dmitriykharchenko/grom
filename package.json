@@ -1,0 +1,35 @@
+{
+  "name": "grom",
+  "version": "0.0.1",
+  "description": "Co-powered awesome build system",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aki-russia/grom.git"
+  },
+  "keywords": [
+    "build",
+    "system",
+    "task",
+    "runner",
+    "task",
+    "automation",
+    "co"
+  ],
+  "author": "Dmitriy Kharchenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aki-russia/grom/issues"
+  },
+  "homepage": "https://github.com/aki-russia/grom#readme",
+  "dependencies": {
+    "co": "^4.6.0",
+    "mz": "^2.0.0",
+    "ramda": "^0.15.1",
+    "read-glob-promise": "^2.0.0",
+    "watch": "^0.16.0"
+  }
+}
