@@ -115,6 +115,6 @@ $ gromjs <task-name>
 
 [mit]:          http://opensource.org/licenses/MIT
 [author]:       http://github.com/aki-russia
-[releases]:     https://github.com/aki-russia/grom/releases
-[npm-pkg-link]: https://www.npmjs.org/package/grom
-[npm-ver-link]: https://img.shields.io/npm/v/grom.svg?style=flat-square
+[releases]:     https://github.com/aki-russia/gromjs/releases
+[npm-pkg-link]: https://www.npmjs.org/package/gromjs
+[npm-ver-link]: https://img.shields.io/npm/v/gromjs.svg?style=flat-square
