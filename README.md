@@ -49,25 +49,54 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
 + `yield this.seq(tasks)` <br />
   Runs tasks one by one, every next one gets result from previous.
 
+
+### Examples:
+
+run tasks in sequence:
 ```js
-  var filesProcessor = require('files-processor')
+var filesProcessor = require('files-processor')
 
-  module.exports.task = function* one (){
-    return 1
-  }
+module.exports.task = function* one (){
+  return 1
+}
 
-  module.exports.two = function* two (results){
-    return results + 2
-  }
+module.exports.two = function* two (results){
+  return results + 2
+}
+
+module.exports.three = function* three(results){
+  return results + 3
+}
+
+module.exports.default = function* three(){
+  yield this.seq([one, two, three]) // 6
+}
+
+```
+
+watch files:
+```js
+
+module.exports.default = function* three(){
+  var monitor = yield this.watch('*.js')
+  monitor.on('change', function* (){
+    yield this.acync(someTask)
+  })
+}
+
+```
 
 
-  module.exports.three = function* three(results){
-    return results + 3
-  }
+process files:
 
-  module.exports.default = function* three(){
-    yield this.async(one, two, three) // 6
-  }
+```js
+var filesProcessor = require('files-processor')
+
+module.exports.task = function* (){
+  var source = yield this.source('path/to/src')
+  var processed = yield filesProcessor(source, options)
+  yield this.dest('path/to/dist', processed)
+}
 ```
 
 ### CLI

@@ -1,6 +1,6 @@
 {
   "name": "gromjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Awesome co-powered build system",
   "main": "lib/grom.js",
   "scripts": {
