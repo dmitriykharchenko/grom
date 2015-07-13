@@ -1,6 +1,11 @@
 #GROM.js
 Awesome [co-powered](https://www.npmjs.com/package/co) build system.
 
+[![npm package][npm-ver-link]][releases]
+
+```
+npm install -g gromjs
+```
 
 ### Super simple
 
@@ -81,3 +86,6 @@ $ gromjs <task-name>
 
 [mit]:          http://opensource.org/licenses/MIT
 [author]:       http://github.com/aki-russia
+[releases]:     https://github.com/aki-russia/grom/releases
+[npm-pkg-link]: https://www.npmjs.org/package/grom
+[npm-ver-link]: https://img.shields.io/npm/v/grom.svg?style=flat-square
