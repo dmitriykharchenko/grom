@@ -26,19 +26,18 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
 
 ### API
 
-  ####`yield this.source(glob)`
+  #### `yield this.source(glob)`
   Returns buffer or array of buffers
 
-  ---
-  ####`yield this.watch(glob)`
+  #### `yield this.watch(glob)`
   Returns events emitter, uses npm module [`watch`](https://www.npmjs.com/package/watch) and `watch.createMonitor` method
 
 
-  ####`yield this.dest(glob, buffer)`
+  #### `yield this.dest(glob, buffer)`
   Accepts glob and buffer or array of buffers and writes everything in right place.
 
 
-  ####`yield this.async(tasks)`
+  #### `yield this.async(tasks)`
   Accepts array of tasks and runs in asynchronously and independent to each other.
 
 
