@@ -1,5 +1,5 @@
 {
-  "name": "grom",
+  "name": "gromjs",
   "version": "0.0.1",
   "description": "Awesome co-powered build system",
   "main": "lib/grom.js",

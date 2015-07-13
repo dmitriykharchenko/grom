@@ -19,7 +19,7 @@ module.exports.task = function* (){
 In terminal:
 
 ```
-$ grom task
+$ gromjs task
 ```
 
 That's it. No special `grom-whatnever` plugins, use whatever you want that can accept and return `Buffer` or array of buffers.
@@ -69,7 +69,7 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
 
 ```
 
-$ grom <task-name>
+$ gromjs <task-name>
 
 ```
 
