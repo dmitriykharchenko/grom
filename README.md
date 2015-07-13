@@ -26,25 +26,25 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
 
 ### API
 
-  #### `yield this.source(glob)`
-  Returns buffer or array of buffers
++ `yield this.source(glob)` <br />
+    Returns buffer or array of buffers
 
-  #### `yield this.watch(glob)`
++ `yield this.watch(glob)` <br />
   Returns events emitter, uses npm module [`watch`](https://www.npmjs.com/package/watch) and `watch.createMonitor` method
 
 
-  #### `yield this.dest(glob, buffer)`
++ `yield this.dest(glob, buffer)` <br />
   Accepts glob and buffer or array of buffers and writes everything in right place.
 
 
-  #### `yield this.async(tasks)`
++ `yield this.async(tasks)` <br />
   Accepts array of tasks and runs in asynchronously and independent to each other.
 
 
-  ####`yield this.seq(tasks)`
++ `yield this.seq(tasks)` <br />
   Runs tasks one by one, every next one gets result from previous.
 
-  ```js
+```js
   var filesProcessor = require('files-processor')
 
   module.exports.task = function* one (){
@@ -63,7 +63,7 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
   module.exports.default = function* three(){
     yield this.async(one, two, three) // 6
   }
-  ```
+```
 
 ### CLI
 
