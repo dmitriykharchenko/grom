@@ -1,13 +1,14 @@
 {
   "name": "gromjs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Awesome co-powered build system",
   "main": "lib/grom.js",
   "scripts": {
     "test": "test"
   },
+  "preferGlobal": true,
   "bin": {
-    "grom": "bin/index.js"
+    "grom": "./bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,9 +29,9 @@
   "dependencies": {
     "co": "^4.6.0",
     "commander": "^2.8.1",
+    "glob": "^5.0.13",
     "mz": "^2.0.0",
     "ramda": "^0.15.1",
-    "read-glob-promise": "^2.0.0",
     "watch": "^0.16.0",
     "yieldables": "^0.2.0"
   }
