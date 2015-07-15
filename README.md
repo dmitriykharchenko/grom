@@ -7,6 +7,10 @@ Awesome [co-powered](https://www.npmjs.com/package/co) build system.
 npm install -g gromjs
 ```
 
+### Why?
+
+The goal of grom.js is to be a plugin-less build system that will allow to use any node module to process files without pain. In active development now, interface is about to change. Contributions are highly welcome.
+
 ### Super simple
 
 In `gromfile.js`:
@@ -54,19 +58,19 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
 
 #### File
 
-+ `name()`
++ `name()` <br />
   Returns name with extension
 
-+ `ext()`
++ `ext()` <br />
   Return extension
 
-+ `buffer()`
++ `buffer()` <br />
   Generator, returns file's Buffer
 
-+ `source()`
++ `source()` <br />
   Generator, returns file's source code
 
-+ `new(path, buffer)`
++ `new(path, buffer)` <br />
   Creates new File, path can be presented as hash with `dir`, `name`, `ext` fields which will be merged with parent file's path,
   path also can be just a string
 
@@ -111,11 +115,13 @@ module.exports.default = function* three(){
 process files:
 
 ```js
-var filesProcessor = require('files-processor')
+var processor = require('files-processor')
+var R = require('ramda')
 
 module.exports.task = function* (){
-  var source = yield this.source('path/to/src')
-  var processed = yield filesProcessor(source, options)
+  var files = yield this.source('path/to/src')
+  var first = files[0]
+  var processed = first.new({ext: "processed"}, yield processor((yield files[0].source()), options))
   yield this.dest('path/to/dist', processed)
 }
 ```
