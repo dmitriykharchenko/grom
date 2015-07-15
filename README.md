@@ -12,11 +12,13 @@ npm install -g gromjs
 In `gromfile.js`:
 
 ```js
-var filesProcessor = require('files-processor')
+var processor = require('files-processor')
+var R = require('ramda')
 
 module.exports.task = function* (){
-  var source = yield this.source('path/to/src')
-  var processed = yield filesProcessor(source, options)
+  var files = yield this.source('path/to/src')
+  var first = files[0]
+  var processed = first.new({ext: "processed"}, yield processor((yield files[0].source()), options))
   yield this.dest('path/to/dist', processed)
 }
 ```
@@ -27,12 +29,12 @@ In terminal:
 $ gromjs task
 ```
 
-That's it. No special `grom-whatnever` plugins, use whatever you want that can accept and return `Buffer` or array of buffers.
+That's it. No special `grom-whatever` plugins, use whatever you want.
 
 ### API
 
 + `yield this.source(glob)` <br />
-    Returns buffer or array of buffers
+    Returns array of Files
 
 + `yield this.watch(glob)` <br />
   Returns events emitter, uses npm module [`watch`](https://www.npmjs.com/package/watch) and `watch.createMonitor` method
@@ -48,6 +50,25 @@ That's it. No special `grom-whatnever` plugins, use whatever you want that can a
 
 + `yield this.seq(tasks)` <br />
   Runs tasks one by one, every next one gets result from previous.
+
+
+#### File
+
++ `name()`
+  Returns name with extension
+
++ `ext()`
+  Return extension
+
++ `buffer()`
+  Generator, returns file's Buffer
+
++ `source()`
+  Generator, returns file's source code
+
++ `new(path, buffer)`
+  Creates new File, path can be presented as hash with `dir`, `name`, `ext` fields which will be merged with parent file's path,
+  path also can be just a string
 
 
 ### Examples:
