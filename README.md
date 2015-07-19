@@ -20,10 +20,13 @@ var processor = require('files-processor')
 var R = require('ramda')
 
 module.exports.task = function* (){
-  var files = yield this.source('path/to/src')
-  var first = files[0]
-  var processed = first.new({ext: "processed"}, yield processor((yield files[0].source()), options))
-  yield this.dest('path/to/dist', processed)
+  var filesSet = yield this.read(['path/to/files'])
+  var mappedFilesSet = filesSet.map(function*(file){
+    var newSource = processor(yield file.source())
+    return file.clone({ ext: '.processed'}, newSource)
+  })
+
+  yield this.write('path/to/dist', mappedFilesSet)
 }
 ```
 
@@ -37,15 +40,15 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
 
 ### API
 
-+ `yield this.source(glob)` <br />
-    Returns array of Files
++ `yield this.read(glob)` <br />
+    Returns ordered Set of Files
 
 + `yield this.watch(glob)` <br />
   Returns events emitter, uses npm module [`watch`](https://www.npmjs.com/package/watch) and `watch.createMonitor` method
 
 
-+ `yield this.dest(glob, buffer)` <br />
-  Accepts glob and buffer or array of buffers and writes everything in right place.
++ `yield this.write(glob, Set)` <br />
+  Accepts glob, Set of Files and writes everything in right place.
 
 
 + `yield this.async(tasks)` <br />
@@ -53,26 +56,59 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
 
 
 + `yield this.seq(tasks)` <br />
-  Runs tasks one by one, every next one gets result from previous.
+  Runs tasks one by one from left to right, every next one get result from previous.
+
+#### Set
+  Is a set of `Files` uniq by glob, have next methods:
+
+  + `elements()` <br/>
+    Returns `Set`'s elements
+
+  + `contains(file)` <br/>
+    Checks if `file` is in `Set` by file's glob
+
+  + `add(file)` <br/>
+    Returns new `Set` with all elements plus new one
+
+  + `remove(element)` <br/>
+    Returns new `Set` with all elements but not one passed to `remove`
+
+  + `merge(set)` <br/>
+    Returns new `Set` with all elements from both sets
+
+  + `intersection(set)` <br/>
+    Returns new `Set` with all elements from intersection between sets
+
+  + `filter(interator*)` <br/>
+    Returns new `Set` with filtered elements
+
+  + `sort(interator*)` <br/>
+    Returns new `Set` with sorted elements
+
+  + `reduce(interator*, accumulator)` <br/>
+    Returns reduced value
+
+  + `map(interator*)` <br/>
+    Returns new `Set` with mapped elements
+
+  + `forEach(interator*)` <br/>
+    Iterates over elements and returns current `Set`
 
 
 #### File
 
++ `glob()` <br />
+  Returns glob
+
 + `name()` <br />
   Returns name with extension
-
-+ `ext()` <br />
-  Return extension
-
-+ `buffer()` <br />
-  Generator, returns file's Buffer
 
 + `source()` <br />
   Generator, returns file's source code
 
-+ `new(path, buffer)` <br />
-  Creates new File, path can be presented as hash with `dir`, `name`, `ext` fields which will be merged with parent file's path,
-  path also can be just a string
++ `clone([glob], [source])` <br />
+  Creates new File, glob can be presented as hash with `dir`, `name`, `ext` fields which will be merged with parent file's path,
+  path also can be just a string, if `glob` or `source` isn't provided, `clone` takes it from parent.
 
 
 ### Examples:
@@ -81,20 +117,23 @@ run tasks in sequence:
 ```js
 var filesProcessor = require('files-processor')
 
-module.exports.task = function* one (){
-  return 1
+module.exports.task = function* read (){
+  return yield this.read('/some/path/to/**.ext')
 }
 
-module.exports.two = function* two (results){
-  return results + 2
+module.exports.processSet = function* processSet (set){
+  return processSet.map(function* (file){
+    var source = yield file.source()
+    return file.clone({ ext: 'js' }, yield extProcessor(source))
+  })
 }
 
-module.exports.three = function* three(results){
-  return results + 3
+module.exports.write = function* write (set){
+  return yield this.write('/another/path', set)
 }
 
 module.exports.default = function* three(){
-  yield this.seq([one, two, three]) // 6
+  yield this.seq([read, processSet, write]) // 6
 }
 
 ```
@@ -104,7 +143,7 @@ watch files:
 
 module.exports.default = function* three(){
   var monitor = yield this.watch('*.js')
-  monitor.on('change', function* (){
+  monitor.on('change', function* (Set){
     yield this.acync(someTask)
   })
 }
@@ -119,10 +158,13 @@ var processor = require('files-processor')
 var R = require('ramda')
 
 module.exports.task = function* (){
-  var files = yield this.source('path/to/src')
-  var first = files[0]
-  var processed = first.new({ext: "processed"}, yield processor((yield files[0].source()), options))
-  yield this.dest('path/to/dist', processed)
+  var filesSet = yield this.read(['path/to/files'])
+  var mappedFilesSet = filesSet.map(function*(file){
+    var newSource = processor(yield file.source())
+    return file.clone({ ext: '.processed'}, newSource)
+  })
+
+  yield this.write('path/to/dist', mappedFilesSet)
 }
 ```
 
