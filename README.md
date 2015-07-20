@@ -117,18 +117,18 @@ run tasks in sequence:
 ```js
 var filesProcessor = require('files-processor')
 
-module.exports.task = function* read (){
+var read = function* (){
   return yield this.read('/some/path/to/**.ext')
 }
 
-module.exports.processSet = function* processSet (set){
-  return processSet.map(function* (file){
+var processSet = function* (set){
+  return set.map(function* (file){
     var source = yield file.source()
     return file.clone({ ext: 'js' }, yield extProcessor(source))
   })
 }
 
-module.exports.write = function* write (set){
+var write = function* (set){
   return yield this.write('/another/path', set)
 }
 
