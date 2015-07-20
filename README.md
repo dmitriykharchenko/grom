@@ -9,7 +9,7 @@ npm install -g gromjs
 
 ### Why?
 
-The goal of grom.js is to be a plugin-less build system that will allow to use any node module to process files without pain. In active development now, interface is about to change. Contributions are highly welcome.
+The goal of grom.js is to be a plugin-less build system that will allow to use any node module to process files without pain. Gives more control
 
 ### Super simple
 
@@ -163,7 +163,6 @@ module.exports.task = function* (){
     var newSource = processor(yield file.source())
     return file.clone({ ext: '.processed'}, newSource)
   })
-
   yield this.write('path/to/dist', mappedFilesSet)
 }
 ```
@@ -175,6 +174,12 @@ module.exports.task = function* (){
 $ gromjs <task-name>
 
 ```
+
+
+### TODO
+* Tasks logger
+* Tests
+* More examples
 
 
 # License
