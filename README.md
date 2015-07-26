@@ -100,6 +100,9 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
 
 #### File
 
++ `path()` <br />
+  Returns full path
+
 + `glob()` <br />
   Returns glob
 
@@ -136,7 +139,7 @@ var write = function* (set){
 }
 
 module.exports.default = function* three(){
-  yield this.seq([read, processSet, write]) // 6
+  yield this.seq([read, processSet, write])
 }
 
 ```
@@ -147,7 +150,7 @@ watch files:
 module.exports.default = function* three(){
   var monitor = yield this.watch('*.js')
   monitor.on('change', function* (Set){
-    yield this.acync(someTask)
+    yield this.async(someTask)
   })
 }
 
