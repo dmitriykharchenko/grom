@@ -26,7 +26,7 @@ module.exports.task = function* (){
     return file.clone({ ext: '.processed'}, newSource)
   })
 
-  yield this.write('path/to/dist', mappedFilesSet)
+  return yield this.write('path/to/dist', mappedFilesSet)
 }
 ```
 
@@ -64,20 +64,23 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
   + `elements()` <br/>
     Returns `Set`'s elements
 
-  + `contains(file)` <br/>
+  + `isContains(file)` <br/>
     Checks if `file` is in `Set` by file's glob
 
   + `add(file)` <br/>
     Returns new `Set` with all elements plus new one
 
   + `remove(element)` <br/>
-    Returns new `Set` with all elements but not one passed to `remove`
+    Returns new `Set` without single `element`
 
-  + `merge(set)` <br/>
-    Returns new `Set` with all elements from both sets
+  + `union(set)` <br/>
+    Returns new `Set` that is union of elements from both sets
 
   + `intersection(set)` <br/>
-    Returns new `Set` with all elements from intersection between sets
+    Returns new `Set` that is intersection between sets
+
+  + `difference(set)` <br/>
+    Returns new `Set` that is difference between sets
 
   + `filter(interator*)` <br/>
     Returns new `Set` with filtered elements
@@ -151,20 +154,23 @@ module.exports.default = function* three(){
 ```
 
 
-process files:
+compile less:
 
 ```js
-var processor = require('files-processor')
-var R = require('ramda')
+var less = require('less')
 
-module.exports.task = function* (){
-  var filesSet = yield this.read(['path/to/files'])
-  var mappedFilesSet = filesSet.map(function*(file){
-    var newSource = processor(yield file.source())
-    return file.clone({ ext: '.processed'}, newSource)
+module.exports.compileLess = function* compileLess (){
+  var lessFilesSet = yield this.read('./code/**.less')
+
+  var cssFilesSet = yield lessFilesSet.map(function* (file){
+    var lessContents = (yield file.source()).toString()
+    var css = (yield less.render(lessContents, {})).css
+    return file.clone({ ext: 'css' }, css)
   })
-  yield this.write('path/to/dist', mappedFilesSet)
+
+  return yield this.write('./dist', cssFilesSet)
 }
+
 ```
 
 ### CLI

@@ -1,6 +1,6 @@
 {
   "name": "gromjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Awesome co-powered build system",
   "main": "lib/grom.js",
   "scripts": {
@@ -27,11 +27,12 @@
   },
   "homepage": "https://github.com/aki-russia/grom#readme",
   "dependencies": {
+    "chalk": "^1.1.0",
     "co": "^4.6.0",
     "commander": "^2.8.1",
     "glob": "^5.0.13",
     "mz": "^2.0.0",
-    "ramda": "^0.15.1",
+    "ramda": "^0.17.0",
     "watch": "^0.16.0",
     "yieldables": "^0.2.0"
   }

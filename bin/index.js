@@ -5,8 +5,8 @@ if (!require("yieldables")) throw new Error("Grom requires generators support (n
 
 var program = require('commander');
 var path = require('path');
-var packageJson = require('../package')
-var cli = require('../lib/cli')
+var packageJson = require('../package');
+var cli = require('../lib/cli');
 
 
 program
