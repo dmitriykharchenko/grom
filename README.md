@@ -23,7 +23,7 @@ module.exports.task = function* (){
   var filesSet = yield this.read(['path/to/files'])
   var mappedFilesSet = filesSet.map(function*(file){
     var newSource = processor(yield file.source())
-    return file.clone({ ext: '.processed'}, newSource)
+    return file.clone(newSource, { ext: '.processed'})
   })
 
   return yield this.write('path/to/dist', mappedFilesSet)
@@ -130,7 +130,7 @@ var read = function* (){
 var processSet = function* (set){
   return set.map(function* (file){
     var source = yield file.source()
-    return file.clone({ ext: 'js' }, yield extProcessor(source))
+    return file.clone(yield extProcessor(source), { ext: 'js' })
   })
 }
 
@@ -168,7 +168,7 @@ module.exports.compileLess = function* compileLess (){
   var cssFilesSet = yield lessFilesSet.map(function* (file){
     var lessContents = (yield file.source()).toString()
     var css = (yield less.render(lessContents, {})).css
-    return file.clone({ ext: 'css' }, css)
+    return file.clone(css, { ext: 'css' })
   })
 
   return yield this.write('./dist', cssFilesSet)
