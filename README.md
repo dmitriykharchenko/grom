@@ -82,19 +82,19 @@ That's it. No special `grom-whatever` plugins, use whatever you want.
   + `difference(set)` <br/>
     Returns new `Set` that is difference between sets
 
-  + `filter(interator*)` <br/>
+  + `filter(iterator*)` <br/>
     Returns new `Set` with filtered elements
 
-  + `sort(interator*)` <br/>
+  + `sort(iterator*)` <br/>
     Returns new `Set` with sorted elements
 
-  + `reduce(interator*, accumulator)` <br/>
+  + `reduce(iterator*, accumulator)` <br/>
     Returns reduced value
 
-  + `map(interator*)` <br/>
+  + `map(iterator*)` <br/>
     Returns new `Set` with mapped elements
 
-  + `forEach(interator*)` <br/>
+  + `forEach(iterator*)` <br/>
     Iterates over elements and returns current `Set`
 
 
